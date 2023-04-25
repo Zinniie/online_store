@@ -5,6 +5,7 @@ import 'package:online_shop/controllers/mainscreen_provider.dart';
 import 'package:online_shop/views/shared/appstyle.dart';
 import 'package:online_shop/views/ui/cartpage.dart';
 import 'package:online_shop/views/ui/homepage.dart';
+import 'package:online_shop/views/ui/product_by_cat.dart';
 import 'package:online_shop/views/ui/profile.dart';
 import 'package:online_shop/views/ui/searchpage.dart';
 import 'package:provider/provider.dart';
@@ -15,12 +16,12 @@ import '../shared/bottom_nav_widget.dart';
 class MainScreen extends StatelessWidget {
   MainScreen({super.key});
 
-  List<Widget> pageList = [
-    const HomePage(),
-    const SearchPage(),
-    const HomePage(),
-    const CartPage(),
-    const ProfilePage(),
+  List<Widget> pageList = const [
+    HomePage(),
+    SearchPage(),
+    ProductByCat(),
+    CartPage(),
+    ProfilePage(),
   ];
 
   @override
@@ -36,4 +37,3 @@ class MainScreen extends StatelessWidget {
     });
   }
 }
-
