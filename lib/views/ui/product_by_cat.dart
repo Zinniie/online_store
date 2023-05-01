@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:online_shop/views/shared/catergory_btn.dart';
+import 'package:online_shop/views/shared/custom_spacer.dart';
 import 'package:online_shop/views/shared/stagger_tile.dart';
 
 import '../../models/sneaker_model.dart';
@@ -10,7 +12,9 @@ import '../shared/product_card.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class ProductByCat extends StatefulWidget {
-  const ProductByCat({super.key});
+  const ProductByCat({super.key, required this.tabIndex});
+
+  final int tabIndex;
 
   @override
   State<ProductByCat> createState() => _ProductByCatState();
@@ -46,6 +50,13 @@ class _ProductByCatState extends State<ProductByCat>
     getFemale();
     getKids();
   }
+
+  List<String> brand = [
+    'assets/images/adidas.png',
+    'assets/images/gucci.png',
+    'assets/images/jordan.png',
+    'assets/images/nike.png',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +99,7 @@ class _ProductByCatState extends State<ProductByCat>
                         ),
                         GestureDetector(
                           onTap: () {
+                            filter();
                             // Navigator.pop(context);
                           },
                           child: Icon(
@@ -136,6 +148,139 @@ class _ProductByCatState extends State<ProductByCat>
                   LatestShoes(male: _female),
                   LatestShoes(male: _kids),
                 ]),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<dynamic> filter() {
+    double _value = 100;
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.white54,
+      builder: (context) => Container(
+        height: MediaQuery.of(context).size.height * 0.84,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25), topRight: Radius.circular(25))),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              height: 5,
+              width: 40,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                  color: Colors.black),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.7,
+              child: Column(
+                children: [
+                  const CustomSpacer(),
+                  Text(
+                    'Filter',
+                    style: appstyle(40, Colors.black, FontWeight.bold),
+                  ),
+                  CustomSpacer(),
+                  Text(
+                    'Gender',
+                    style: appstyle(
+                      20,
+                      Colors.black,
+                      FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: const [
+                      CategoryBtn(buttonClr: Colors.black, label: 'Men'),
+                      CategoryBtn(buttonClr: Colors.grey, label: 'Women'),
+                      CategoryBtn(buttonClr: Colors.grey, label: 'Kids'),
+                      CustomSpacer(),
+                    ],
+                  ),
+                  CustomSpacer(),
+                  Text(
+                    'Category',
+                    style: appstyle(20, Colors.black, FontWeight.w600),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: const [
+                      CategoryBtn(buttonClr: Colors.black, label: 'Shoes'),
+                      CategoryBtn(buttonClr: Colors.grey, label: 'Apparels'),
+                      CategoryBtn(buttonClr: Colors.grey, label: 'Accessories'),
+                    ],
+                  ),
+                  const CustomSpacer(),
+                  Text(
+                    'Price',
+                    style: appstyle(20, Colors.black, FontWeight.bold),
+                  ),
+                  const CustomSpacer(),
+                  Slider(
+                    value: _value,
+                    activeColor: Colors.black,
+                    inactiveColor: Colors.grey,
+                    thumbColor: Colors.black,
+                    max: 500,
+                    divisions: 50,
+                    // secondaryTrackValue: 200,
+                    label: _value.toString(),
+
+                    onChanged: (double value) {},
+                  ),
+                  CustomSpacer(),
+                  Text(
+                    "Brand",
+                    style: appstyle(20, Colors.black, FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(8),
+                    height: 80,
+                    child: ListView.builder(
+                        itemCount: brand.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                              padding: EdgeInsets.all(
+                                8,
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade200,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(12),
+                                  ),
+                                ),
+                                child: Image.asset(
+                                  brand[index],
+                                  height: 60,
+                                  width: 80,
+                                  color: Colors.black,
+                                ),
+                              ));
+                        }),
+                  )
+                ],
               ),
             )
           ],

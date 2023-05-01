@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:online_shop/views/ui/product_by_cat.dart';
 
 import '../../models/sneaker_model.dart';
 import 'appstyle.dart';
@@ -9,11 +10,12 @@ import 'product_card.dart';
 class HomeWidget extends StatelessWidget {
   const HomeWidget({
     Key? key,
-    required Future<List<Sneakers>> male,
+    required Future<List<Sneakers>> male, required this.tabIndex,
   })  : _male = male,
         super(key: key);
 
   final Future<List<Sneakers>> _male;
+  final int tabIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -61,17 +63,25 @@ class HomeWidget extends StatelessWidget {
                     'Latest Shoes',
                     style: appstyle(24, Colors.black, FontWeight.bold),
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        'Show All',
-                        style: appstyle(22, Colors.black, FontWeight.w500),
-                      ),
-                      const Icon(
-                        AntDesign.caretright,
-                        size: 20,
-                      )
-                    ],
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProductByCat(tabIndex: tabIndex,)));
+                    },
+                    child: Row(
+                      children: [
+                        Text(
+                          'Show All',
+                          style: appstyle(22, Colors.black, FontWeight.w500),
+                        ),
+                        const Icon(
+                          AntDesign.caretright,
+                          size: 20,
+                        )
+                      ],
+                    ),
                   )
                 ],
               ),
